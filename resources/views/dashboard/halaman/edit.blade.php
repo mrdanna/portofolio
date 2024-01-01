@@ -4,8 +4,9 @@
     <div class="pb-3">
         <a href="{{ route('halaman.index') }}" class="btn btn-secondary"> << Kembali </a>
     </div>
-    <form action="{{ route('halaman.store') }}" method="POST">
+    <form action="{{ route('halaman.update',$data->id) }}" method="POST">
         @csrf
+        @method('put')
         <div class="mb-3">
             <label for="judul" class="form-label">Judul</label>
             <input
@@ -15,16 +16,16 @@
                 id="judul"
                 aria-describedby="helpId"
                 placeholder="Judul"
-                value="{{ Session::get('judul') }}"
+                value="{{ $data->judul }}"
             />
         </div>
 
         <div class="mb-3">
             <label for="isi" class="form-label">Isi</label>
-            <textarea class="form-control summernote" rows="5" name="isi">{{ Session::get('isi') }}</textarea>
+            <textarea class="form-control summernote" rows="5" name="isi">{{ $data->isi }}</textarea>
         </div>
 
-        <button class="btn btn-primary" name="simpan" type="submit">SIMPAN </button>
+        <button class="btn btn-primary" name="simpan" type="submit">EDIT </button>
 
     </form>
 @endsection

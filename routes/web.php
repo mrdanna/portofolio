@@ -3,8 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\skillController;
 use App\Http\Controllers\halamanController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\educationController;
+use App\Http\Controllers\experienceController;
+use App\Http\Controllers\pengaturanHalamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +37,28 @@ Route::get('/auth/logout', [authController::class, "logout"]);
 
 Route::prefix('dashboard')->middleware('auth')->group(
     function(){
-        Route::get('/', function(){
-            return view('dashboard.layout');
-        });
+        // Route::get('/', function(){
+        //     return view('dashboard.layout');
+        // });
+        Route::get('/', [halamanController::class, 'index']);
         Route::resource('halaman', halamanController::class);
+
+        //experience
+        Route::resource('experience', experienceController::class);
+
+        //education
+        Route::resource('education', educationController::class);
+
+        //skill
+        Route::get('skill', [skillController::class, "index"])->name('skill.index');
+        Route::post('skill', [skillController::class, "update"])->name('skill.update');
+
+        //profil
+        Route::get('profile', [profileController::class, "index"])->name('profile.index');
+        Route::post('profile', [profileController::class, "update"])->name('profile.update');
+
+        //pengaturan
+        Route::get('pengaturanhalaman', [pengaturanHalamanController::class, "index"])->name('pengaturanhalaman.index');
+        Route::post('pengaturanhalaman', [pengaturanHalamanController::class, "update"])->name('pengaturanhalaman.update');
     }
 );

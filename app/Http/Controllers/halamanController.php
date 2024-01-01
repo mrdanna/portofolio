@@ -15,7 +15,8 @@ class halamanController extends Controller
      */
     public function index()
     {
-        return view('dashboard.halaman.index');
+        $data = Halaman::orderBy('judul', 'asc')->get();
+        return view('dashboard.halaman.index')->with('data', $data);
     }
 
     /**
@@ -78,7 +79,8 @@ class halamanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Halaman::where('id', $id)->first();
+        return view('dashboard.halaman.edit')->with('data', $data);
     }
 
     /**
@@ -90,7 +92,24 @@ class halamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'judul'=>'required',
+            'isi' => 'required'
+        ],[
+            'judul.required'=> 'judul wajib di isi',
+            'isi.required' => 'isi wajib si isi'
+        ]
+        );
+
+        $data = [
+            'judul'=> $request->judul,
+            'isi' => $request->isi
+        ];
+
+        Halaman::where('id',$id)->update($data);
+
+        return redirect()->route('halaman.index')->with('success', 'Berhasil merubah data');
     }
 
     /**
@@ -101,6 +120,7 @@ class halamanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Halaman::where('id', $id)->delete();
+        return redirect()->route('halaman.index')->with('success', 'Berhasil hapus data');
     }
 }
