@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\depanController;
 use App\Http\Controllers\skillController;
 use App\Http\Controllers\halamanController;
 use App\Http\Controllers\profileController;
@@ -25,6 +26,8 @@ use App\Http\Controllers\pengaturanHalamanController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', [depanController::class, "index"]);
 
 Route::redirect('home', 'dashboard');
 
